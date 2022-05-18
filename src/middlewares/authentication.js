@@ -1,5 +1,6 @@
-const getProfile = async (req, res, next) => {
-  const { Profile } = req.app.get('models');
+const { Profile } = require('../model');
+
+const authentication = async (req, res, next) => {
   const profile = await Profile.findOne(
     {
       where: {
@@ -12,9 +13,9 @@ const getProfile = async (req, res, next) => {
     return res.status(401).end();
   }
 
-  req.profile = profile;
+  req.set('profile', profile);
 
   return next();
 };
 
-module.exports = { getProfile };
+module.exports = authentication;
