@@ -1,10 +1,15 @@
 /* eslint-disable no-console */
-const { Contract, Job, sequelize, Profile } = require('../../../../../model');
+const { Transaction } = require('sequelize');
+const {
+  Contract,
+  Job,
+  sequelize,
+  Profile
+} = require('../../../../../model');
 
 const postJobIdPay = async (req, res, next) => {
   const profileId = req.app.get('profileId') || null;
   const profileType = req.app.get('profileType') || null;
-  const profile = req.app.get('profile') || null;
 
   const {
     id: jobId = null,
@@ -67,7 +72,9 @@ const postJobIdPay = async (req, res, next) => {
 
   // Execute the payment transaction
   try {
-    const jobPayedTransaction = await sequelize.transaction(async (t) => {
+    const jobPayedTransaction = await sequelize.transaction({
+      isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE,
+    }, async (t) => {
       const getJob = await Job.findOne({
         where: {
           id: jobId,

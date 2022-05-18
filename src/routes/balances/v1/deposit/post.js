@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+const { Transaction } = require('sequelize');
 const {
   Contract,
   Job,
@@ -37,7 +38,9 @@ const postBalancesDeposit = async (req, res, next) => {
 
   // Execute the deposit transaction
   try {
-    const jobPayedTransaction = await sequelize.transaction(async (t) => {
+    const jobPayedTransaction = await sequelize.transaction({
+      isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE,
+    }, async (t) => {
       // Decrement the job price from client balance
       const getProfile = await Profile.findOne({
         where: {
