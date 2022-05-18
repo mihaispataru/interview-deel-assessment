@@ -9,24 +9,26 @@ const app = express();
 app.use(bodyParser.json());
 app.use(getProfile);
 
-app.set('sequelize', sequelize)
-app.set('models', sequelize.models)
+app.set('sequelize', sequelize);
+app.set('models', sequelize.models);
 
 /**
  * FIX ME!
  * @returns contract by id
  */
-app.get('/contracts/:id', async (req, res) =>{
-    const { Contract } = req.app.get('models');
-    const { id } = req.params;
+app.get('/contracts/:id', async (req, res) => {
+  const { Contract } = req.app.get('models');
+  const { id } = req.params;
 
-    const contract = await Contract.findOne({ where: { id } });
+  const contract = await Contract.findOne({ where: { id } });
 
-    if (!contract) {
-        return res.status(404).end();
-    }
+  if (!contract) {
+    return res.status(404).end();
+  }
 
-    res.json(contract);
+  res.json(contract);
+
+  return true;
 });
 
 module.exports = app;
