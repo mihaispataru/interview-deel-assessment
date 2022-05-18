@@ -13,7 +13,7 @@ const authentication = async (req, res, next) => {
     return res.status(401).end();
   }
 
-  req.set('profile', profile);
+  req.app.set('profile', profile);
 
   return next();
 };
