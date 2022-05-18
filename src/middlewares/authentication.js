@@ -26,8 +26,9 @@ const authentication = async (req, res, next) => {
     authenticationCache.set(profileId, profile);
   }
 
-  req.app.set('profile', profile);
+  req.app.set('profile', profile.dataValues);
   req.app.set('profileId', profile.id);
+  req.app.set('profileType', profile.type);
 
   return next();
 };
