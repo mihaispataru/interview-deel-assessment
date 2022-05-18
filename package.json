@@ -9,7 +9,8 @@
     "sqlite3": "^4.0.1"
   },
   "scripts": {
-    "start": "nodemon ./src/server.js",
+    "start": "node ./src/server.js",
+    "dev": "nodemon -w . ./src/server.js",
     "seed": "node ./scripts/seedDb.js",
     "lint": "./node_modules/.bin/eslint .",
     "lint-fix": "./node_modules/.bin/eslint . --fix"
