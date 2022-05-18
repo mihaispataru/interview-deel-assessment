@@ -27,6 +27,7 @@ const authentication = async (req, res, next) => {
   }
 
   req.app.set('profile', profile);
+  req.app.set('profileId', profile.id);
 
   return next();
 };
